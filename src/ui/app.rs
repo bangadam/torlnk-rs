@@ -54,9 +54,9 @@ impl App {
         Self {
             config,
             queue,
-            view: View::Splash,
+            view: View::Browser,
             section: Section::Category(Category::All),
-            region: Region::Sidebar,
+            region: Region::Content,
             category: Category::All,
             results: vec![],
             search_query: String::new(),
@@ -205,8 +205,9 @@ impl App {
             KeyCode::Char('?') => { self.show_help = true; }
             KeyCode::Tab => { self.tab_next(); }
             KeyCode::Esc => {
-                if self.view == View::Browser {
-                    self.view = View::Splash;
+                // Exit search capture or clear search
+                if self.capture == CaptureMode::Text {
+                    self.capture = CaptureMode::None;
                 }
             }
             _ => {}
